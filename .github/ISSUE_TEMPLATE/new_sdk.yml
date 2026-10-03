@@ -1,0 +1,29 @@
+name: New Language SDK
+description: Propose a new language SDK (Kotlin, Swift, TypeScript, Python, etc.)
+labels: ["SDK", "enhancement", "help wanted"]
+body:
+  - type: input
+    id: language
+    attributes:
+      label: Target language / platform
+      placeholder: "Kotlin / Android Native"
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why is this SDK needed?
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: Proposed API (pseudocode is fine)
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: I am willing to
+      options:
+        - label: Lead the implementation
+        - label: Review the implementation
+        - label: Help with docs only

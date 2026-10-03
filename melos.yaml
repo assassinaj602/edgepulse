@@ -1,0 +1,31 @@
+name: edgepulse
+
+packages:
+  - packages/*
+
+command:
+  version:
+    message: "chore(release): publish packages"
+    includeScopes: true
+    linkToCommits: true
+
+scripts:
+  test:
+    run: melos exec --fail-fast -- dart test
+    description: Run tests in all packages
+
+  analyze:
+    run: melos exec -- flutter analyze
+    description: Analyze all packages
+
+  format:
+    run: melos exec -- dart format lib test
+    description: Format all packages
+
+  coverage:
+    run: melos exec -- dart test --coverage coverage
+    description: Generate coverage for all packages
+
+  clean:
+    run: melos exec -- flutter clean
+    description: Clean all packages
