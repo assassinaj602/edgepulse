@@ -3,6 +3,7 @@ description: Pure Dart core for EdgePulse — data models, metric collectors, ex
 version: 0.1.0
 repository: https://github.com/assassinaj602/edgepulse
 homepage: https://github.com/assassinaj602/edgepulse#readme
+issue_tracker: https://github.com/assassinaj602/edgepulse/issues
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
