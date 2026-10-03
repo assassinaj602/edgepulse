@@ -3,7 +3,6 @@ description: >-
   Standalone CLI for EdgePulse — trace on-device AI models and compare
   inference results from any terminal or CI/CD pipeline. No Flutter required.
 version: 0.1.0
-publish_to: none
 homepage: https://github.com/assassinaj602/edgepulse
 repository: https://github.com/assassinaj602/edgepulse
 issue_tracker: https://github.com/assassinaj602/edgepulse/issues
