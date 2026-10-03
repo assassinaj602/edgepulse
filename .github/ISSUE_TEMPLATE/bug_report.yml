@@ -1,5 +1,10 @@
 name: Bug Report
 description: Something is not working correctly
+# Before opening this issue, please consider:
+# - For usage questions, use Discussions → Q&A instead
+#   https://github.com/assassinaj602/edgepulse/discussions/categories/q-a
+# - For feature ideas, use Discussions → Ideas first
+#   https://github.com/assassinaj602/edgepulse/discussions/categories/ideas
 labels: ["bug", "triage"]
 body:
   - type: markdown

@@ -10,6 +10,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Dart](https://img.shields.io/badge/Dart-3.0%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![Flutter](https://img.shields.io/badge/Flutter-3.10%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
+[![GitHub Discussions](https://img.shields.io/github/discussions/assassinaj602/edgepulse?style=for-the-badge&logo=github&color=0E8A16)](https://github.com/assassinaj602/edgepulse/discussions)
+[![GitHub Stars](https://img.shields.io/github/stars/assassinaj602/edgepulse?style=for-the-badge&logo=github&color=FBCA04)](https://github.com/assassinaj602/edgepulse/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/assassinaj602/edgepulse?style=for-the-badge&logo=github&color=00B4D8)](https://github.com/assassinaj602/edgepulse/forks)
 
 ---
 
@@ -186,6 +189,22 @@ or language SDK.
 
 Good first issues are labeled 
 [`good first issue`](https://github.com/assassinaj602/edgepulse/issues?q=label%3A%22good+first+issue%22).
+
+---
+
+## 🌟 Contributors
+
+EdgePulse is built by people who believe on-device AI deserves visibility.
+Every contribution — code, docs, bug reports, or experiment traces — matters.
+
+<a href="https://github.com/assassinaj602/edgepulse/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=assassinaj602/edgepulse" />
+</a>
+
+**Want to be here?** Start with a
+[`good first issue`](https://github.com/assassinaj602/edgepulse/issues?q=label%3A%22good+first+issue%22)
+or introduce yourself in
+[Discussions](https://github.com/assassinaj602/edgepulse/discussions).
 
 ---
 
