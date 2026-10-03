@@ -1,0 +1,201 @@
+# EdgePulse
+
+**Runtime observability framework for on-device AI models**
+
+[![pub package](https://img.shields.io/pub/v/edgepulse.svg?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/edgepulse)
+[![pub points](https://img.shields.io/pub/points/edgepulse?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/edgepulse/score)
+[![popularity](https://img.shields.io/pub/popularity/edgepulse?style=for-the-badge)](https://pub.dev/packages/edgepulse/score)
+[![likes](https://img.shields.io/pub/likes/edgepulse?style=for-the-badge)](https://pub.dev/packages/edgepulse/score)
+[![CI](https://img.shields.io/github/actions/workflow/status/assassinaj602/edgepulse/test.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/assassinaj602/edgepulse/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Dart](https://img.shields.io/badge/Dart-3.0%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
+[![Flutter](https://img.shields.io/badge/Flutter-3.10%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
+
+---
+
+## Overview
+
+When an on-device AI model runs on a phone, you currently get one of two outcomes: 
+it worked, or it crashed. You have no visibility into *what happened during inference* — 
+how much memory was consumed, whether the CPU was thermally throttled, how battery 
+draw correlated with model size, or which layers were the bottleneck.
+
+EdgePulse fills that gap. It attaches to any on-device AI model and captures a 
+structured `InferenceTrace` for every run — covering memory (RSS, heap, native), 
+thermal state, battery microamp draw, CPU utilisation, per-layer timing, and output 
+confidence. Traces are exported as JSON, Markdown, or CSV for analysis, CI/CD 
+integration, or academic research.
+
+EdgePulse pairs directly with [SATE AI](https://github.com/assassinaj602/sate_ai): 
+SATE AI *injects faults*, EdgePulse *measures what changes*. Together they form a 
+complete reliability testing pipeline for on-device AI.
+
+---
+
+## Research
+
+EdgePulse is the tooling behind an empirical study of quantized LLM behaviour 
+on consumer edge devices. The research question:
+
+> *What are the observable runtime characteristics of quantized LLMs on consumer 
+> edge devices, and how do they degrade under resource pressure?*
+
+📄 **Paper:** Coming to arXiv — `cs.LG / cs.PF`  
+📊 **Dataset:** Raw inference traces across 3 model families × 3 stress scenarios × 50 runs  
+🔁 **Reproducible:** All experiment scripts are in `research/experiment/`
+
+---
+
+## Platform Support
+
+| Platform        | Language    | Package             | Status          |
+|-----------------|-------------|---------------------|-----------------|
+| Flutter         | Dart        | `edgepulse`         | ✅ Available    |
+| CLI / CI        | Dart        | `edgepulse_cli`     | ✅ Available    |
+| Android Native  | Kotlin      | `sate-android` (TBD)| 🗺️ Planned     |
+| Web / Node.js   | TypeScript  | `@edgepulse/core`   | 🗺️ Planned     |
+| iOS Native      | Swift       | SPM (TBD)           | 🔭 Future       |
+
+---
+
+## Installation
+
+```yaml
+dependencies:
+  edgepulse: ^0.1.0
+```
+
+For CI/CD without Flutter:
+
+```bash
+dart pub global activate edgepulse_cli
+```
+
+---
+
+## Quick Start
+
+```dart
+import 'package:edgepulse/edgepulse.dart';
+
+Future<void> main() async {
+  final pulse = EdgePulse(
+    collector: PlatformMetricCollector(),
+  );
+
+  await pulse.initialize();
+
+  final trace = await pulse.trace(
+    modelId: 'gemma-2b-q4',
+    run: () => myModel.runInference(myInput),
+  );
+
+  print(trace.toMarkdown());
+  await pulse.dispose();
+}
+```
+
+**CLI:**
+
+```bash
+edgepulse trace --model model.tflite --runs 50 --output trace.json
+edgepulse compare baseline.json stressed.json
+```
+
+---
+
+## Architecture
+
+```
+edgepulse/
+├── packages/
+│   ├── edgepulse_core/      ← Pure Dart. FaultInjector, PulseRunner, exporters.
+│   ├── edgepulse/           ← Flutter plugin. Native Android + iOS metric collectors.
+│   └── edgepulse_cli/       ← Standalone CLI binary.
+└── research/
+    ├── experiment/          ← Empirical study scripts.
+    └── paper/               ← Research paper source.
+```
+
+The `MetricCollector` interface is the central plugin point. Implement it to add 
+new metric sources — hardware counters, cloud telemetry, custom sensors.
+
+---
+
+## What a Trace Looks Like
+
+```json
+{
+  "trace_id": "ep_1a2b3c",
+  "model_id": "gemma-2b-q4",
+  "model_format": "gguf",
+  "device_model": "Pixel 8",
+  "os_version": "Android 14",
+  "timestamp": "2026-10-03T10:22:31.000Z",
+  "total_duration_ms": 847,
+  "memory": {
+    "start_rss_mb": 312.4,
+    "peak_rss_mb": 489.1,
+    "end_rss_mb": 318.2
+  },
+  "thermal_state": "nominal",
+  "battery_drain_mah": 0.023,
+  "cpu_usage_percent": 87.3,
+  "output_confidence": 0.91,
+  "layer_timings": [
+    { "name": "embedding", "type": "embedding", "duration_ms": 12 },
+    { "name": "attention_0", "type": "attention", "duration_ms": 94 }
+  ]
+}
+```
+
+---
+
+## Integrates with SATE AI
+
+```dart
+// SATE AI injects a fault, EdgePulse measures the impact
+await SateAI.applyFault(MemoryPressureInjector(limitMb: 200));
+
+final trace = await pulse.trace(
+  modelId: 'my-model',
+  run: () => model.runInference(input),
+);
+
+print('Memory delta: ${trace.memoryDeltaMb} MB');
+print('Latency delta: ${trace.totalDurationMs} ms');
+```
+
+---
+
+## Documentation
+
+- [API Reference](https://pub.dev/documentation/edgepulse)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Roadmap](ROADMAP.md)
+- [Changelog](CHANGELOG.md)
+- [Research Paper](research/paper/) *(coming soon)*
+
+---
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup 
+instructions, the contribution workflow, and how to add a new MetricCollector 
+or language SDK.
+
+Good first issues are labeled 
+[`good first issue`](https://github.com/assassinaj602/edgepulse/issues?q=label%3A%22good+first+issue%22).
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE).
+
+---
+
+## Related Projects
+
+- [SATE AI](https://github.com/assassinaj602/sate_ai) — Fault injection framework 
+  for on-device AI models in Flutter. EdgePulse is the observability companion to SATE AI.

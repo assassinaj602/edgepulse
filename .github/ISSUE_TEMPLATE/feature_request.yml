@@ -1,0 +1,28 @@
+name: Feature Request
+description: Suggest a new metric, exporter, collector, or SDK
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package does this affect?
+      options:
+        - edgepulse_core
+        - edgepulse (Flutter plugin)
+        - edgepulse_cli
+        - New package
+        - Not sure
+    validations:
+      required: true
