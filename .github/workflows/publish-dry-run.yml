@@ -1,0 +1,25 @@
+name: Publish Dry-Run
+
+on:
+  push:
+    branches: [ main, 'feat/*', 'fix/*', 'chore/*', 'ci/*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  publish-dry-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Publish Dry-Run (edgepulse_core)
+        run: |
+          cd packages/edgepulse_core
+          dart pub get
+          dart pub publish --dry-run
