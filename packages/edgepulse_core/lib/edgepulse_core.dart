@@ -1,8 +1,10 @@
-/// Pure Dart core library for EdgePulse — models, collectors, exporters, and runner.
+/// Pure Dart core library for EdgePulse — models, collectors, exporters, runner, and facade.
 library edgepulse_core;
 
+export 'src/collectors/latency_collector.dart';
 export 'src/collectors/metric_collector.dart';
 export 'src/collectors/mock_metric_collector.dart';
+export 'src/edge_pulse.dart';
 export 'src/exporters/csv_exporter.dart';
 export 'src/exporters/json_exporter.dart';
 export 'src/exporters/markdown_exporter.dart';
