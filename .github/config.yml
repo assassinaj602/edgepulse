@@ -1,0 +1,17 @@
+# Configuration for GitHub's issue/discussion suggestion prompts
+# Shown when a user opens a new issue
+
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Ask a Question
+    url: https://github.com/assassinaj602/edgepulse/discussions/categories/q-a
+    about: For usage questions and "how do I" — use Discussions, not Issues.
+  - name: 💡 Suggest a Feature
+    url: https://github.com/assassinaj602/edgepulse/discussions/categories/ideas
+    about: For ideas and proposals — discuss first, then open an issue if we agree.
+  - name: 🔬 Discuss the Research
+    url: https://github.com/assassinaj602/edgepulse/discussions/categories/research
+    about: Paper, experiment design, dataset questions.
+  - name: 🔒 Report a Security Vulnerability
+    url: https://github.com/assassinaj602/edgepulse/blob/main/SECURITY.md
+    about: Do NOT open a public issue. See SECURITY.md for private disclosure.
