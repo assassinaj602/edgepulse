@@ -16,8 +16,6 @@ topics:
   - performance
   - profiling
   - developer-tools
-  - ci-cd
-  - edge-computing
 
 dependencies:
   edgepulse_core: ^0.1.0
