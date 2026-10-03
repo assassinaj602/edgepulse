@@ -75,7 +75,8 @@ void main() {
       expect(markdown, contains('# Trace Summary Report for llama-3'));
     });
 
-    test('catches inference exceptions and records error in metadata', () async {
+    test('catches inference exceptions and records error in metadata',
+        () async {
       final trace = await runner.trace(
         modelId: 'failing_model',
         modelFormat: 'tflite',

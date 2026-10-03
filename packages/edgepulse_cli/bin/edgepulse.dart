@@ -61,7 +61,8 @@ Future<void> main(List<String> arguments) async {
 }
 
 void _printUsage(ArgParser parser) {
-  stdout.writeln('EdgePulse CLI — Standalone AI Model Tracing & Comparison Tool');
+  stdout
+      .writeln('EdgePulse CLI — Standalone AI Model Tracing & Comparison Tool');
   stdout.writeln();
   stdout.writeln('Usage: edgepulse <command> [options]');
   stdout.writeln();

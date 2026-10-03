@@ -17,7 +17,8 @@ void main() {
       expect(mockPulse.isInitialized, isFalse);
     });
 
-    test('lifecycle: isInitialized changes on initialize and dispose', () async {
+    test('lifecycle: isInitialized changes on initialize and dispose',
+        () async {
       expect(pulse.isInitialized, isFalse);
       await pulse.initialize();
       expect(pulse.isInitialized, isTrue);

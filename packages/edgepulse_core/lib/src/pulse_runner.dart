@@ -81,9 +81,8 @@ class PulseRunner {
         ? await collector.captureThermalState()
         : ThermalState.unknown;
 
-    final double? battery = config.collectBattery
-        ? await collector.captureBatteryDrainMah()
-        : null;
+    final double? battery =
+        config.collectBattery ? await collector.captureBatteryDrainMah() : null;
 
     final double? cpu =
         config.collectCpu ? await collector.captureCpuUsagePercent() : null;
