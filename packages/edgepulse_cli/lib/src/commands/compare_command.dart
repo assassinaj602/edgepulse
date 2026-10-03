@@ -38,15 +38,18 @@ class CompareCommand {
     }
 
     if (results['help'] as bool) {
-      stdout.writeln('Usage: edgepulse compare <file1.json> <file2.json> [options]');
+      stdout.writeln(
+          'Usage: edgepulse compare <file1.json> <file2.json> [options]');
       stdout.writeln(argParser.usage);
       return 0;
     }
 
     final rest = results.rest;
     if (rest.length < 2) {
-      stderr.writeln('Error: Two JSON trace files are required for comparison.');
-      stderr.writeln('Usage: edgepulse compare <baseline.json> <stressed.json>');
+      stderr
+          .writeln('Error: Two JSON trace files are required for comparison.');
+      stderr
+          .writeln('Usage: edgepulse compare <baseline.json> <stressed.json>');
       return 1;
     }
 
@@ -242,7 +245,8 @@ class CompareCommand {
 
     final baseStr = base.toStringAsFixed(digits).padRight(16);
     final stressedStr = stressed.toStringAsFixed(digits).padRight(16);
-    final deltaStr = '$sign${delta.toStringAsFixed(digits)} ($sign${pct.toStringAsFixed(1)}%)';
+    final deltaStr =
+        '$sign${delta.toStringAsFixed(digits)} ($sign${pct.toStringAsFixed(1)}%)';
 
     final metricPadded = metric.padRight(20);
     return '$metricPadded $baseStr $stressedStr $deltaStr';

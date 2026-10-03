@@ -155,19 +155,24 @@ class InferenceTrace {
     buffer.writeln('| Metric | Value |');
     buffer.writeln('| --- | --- |');
     buffer.writeln('| Duration | ${totalDurationMs}ms |');
-    buffer.writeln('| Memory Start | ${memoryStart.rssMb.toStringAsFixed(1)} MB |');
-    buffer.writeln('| Memory Peak | ${memoryPeak.rssMb.toStringAsFixed(1)} MB |');
+    buffer.writeln(
+        '| Memory Start | ${memoryStart.rssMb.toStringAsFixed(1)} MB |');
+    buffer
+        .writeln('| Memory Peak | ${memoryPeak.rssMb.toStringAsFixed(1)} MB |');
     buffer.writeln('| Memory End | ${memoryEnd.rssMb.toStringAsFixed(1)} MB |');
-    buffer.writeln('| Memory Delta | ${memoryDeltaMb >= 0 ? "+" : ""}${memoryDeltaMb.toStringAsFixed(1)} MB |');
+    buffer.writeln(
+        '| Memory Delta | ${memoryDeltaMb >= 0 ? "+" : ""}${memoryDeltaMb.toStringAsFixed(1)} MB |');
     buffer.writeln('| Thermal State | ${thermalState.name} |');
     if (cpuUsagePercent != null) {
       buffer.writeln('| CPU Usage | ${cpuUsagePercent!.toStringAsFixed(1)}% |');
     }
     if (batteryDrainMah != null) {
-      buffer.writeln('| Battery Drain | ${batteryDrainMah!.toStringAsFixed(4)} mAh |');
+      buffer.writeln(
+          '| Battery Drain | ${batteryDrainMah!.toStringAsFixed(4)} mAh |');
     }
     if (outputConfidence != null) {
-      buffer.writeln('| Output Confidence | ${(outputConfidence! * 100).toStringAsFixed(1)}% |');
+      buffer.writeln(
+          '| Output Confidence | ${(outputConfidence! * 100).toStringAsFixed(1)}% |');
     }
 
     if (layerTimings.isNotEmpty) {

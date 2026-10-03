@@ -6,7 +6,7 @@
 [![pub points](https://img.shields.io/pub/points/edgepulse?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/edgepulse/score)
 [![popularity](https://img.shields.io/pub/popularity/edgepulse?style=for-the-badge)](https://pub.dev/packages/edgepulse/score)
 [![likes](https://img.shields.io/pub/likes/edgepulse?style=for-the-badge)](https://pub.dev/packages/edgepulse/score)
-[![CI](https://img.shields.io/github/actions/workflow/status/assassinaj602/edgepulse/test.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/assassinaj602/edgepulse/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/assassinaj602/edgepulse/test.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/assassinaj602/edgepulse/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Dart](https://img.shields.io/badge/Dart-3.0%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![Flutter](https://img.shields.io/badge/Flutter-3.10%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)

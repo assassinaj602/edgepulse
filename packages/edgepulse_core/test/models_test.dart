@@ -7,12 +7,14 @@ void main() {
       expect(ThermalState.fromString('nominal'), equals(ThermalState.nominal));
       expect(ThermalState.fromString('FAIR'), equals(ThermalState.fair));
       expect(ThermalState.fromString('serious'), equals(ThermalState.serious));
-      expect(ThermalState.fromString('critical'), equals(ThermalState.critical));
+      expect(
+          ThermalState.fromString('critical'), equals(ThermalState.critical));
       expect(ThermalState.fromString('unknown'), equals(ThermalState.unknown));
     });
 
     test('fromString defaults to unknown for invalid values', () {
-      expect(ThermalState.fromString('invalid_state'), equals(ThermalState.unknown));
+      expect(ThermalState.fromString('invalid_state'),
+          equals(ThermalState.unknown));
       expect(ThermalState.fromString(''), equals(ThermalState.unknown));
     });
   });

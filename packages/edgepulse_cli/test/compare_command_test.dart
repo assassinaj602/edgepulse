@@ -12,7 +12,8 @@ void main() {
     late CompareCommand command;
 
     setUp(() async {
-      tempDir = await Directory.systemTemp.createTemp('edgepulse_compare_test_');
+      tempDir =
+          await Directory.systemTemp.createTemp('edgepulse_compare_test_');
       command = CompareCommand();
     });
 
@@ -71,29 +72,37 @@ void main() {
     });
 
     test('returns exit code 1 if file does not exist', () async {
-      final exitCode = await command.run(['non_existent.json', 'also_missing.json']);
+      final exitCode =
+          await command.run(['non_existent.json', 'also_missing.json']);
       expect(exitCode, equals(1));
     });
 
     test('returns 0 when baseline is better or equal', () async {
-      final file1 = await createSampleTraceFile('base.json', durationMs: 100, rssMb: 200.0);
-      final file2 = await createSampleTraceFile('fast.json', durationMs: 80, rssMb: 180.0);
+      final file1 = await createSampleTraceFile('base.json',
+          durationMs: 100, rssMb: 200.0);
+      final file2 = await createSampleTraceFile('fast.json',
+          durationMs: 80, rssMb: 180.0);
 
       final exitCode = await command.run([file1, file2]);
       expect(exitCode, equals(0));
     });
 
-    test('returns 1 when stressed run is worse (regression detected)', () async {
-      final file1 = await createSampleTraceFile('base.json', durationMs: 100, rssMb: 200.0);
-      final file2 = await createSampleTraceFile('slow.json', durationMs: 250, rssMb: 400.0);
+    test('returns 1 when stressed run is worse (regression detected)',
+        () async {
+      final file1 = await createSampleTraceFile('base.json',
+          durationMs: 100, rssMb: 200.0);
+      final file2 = await createSampleTraceFile('slow.json',
+          durationMs: 250, rssMb: 400.0);
 
       final exitCode = await command.run([file1, file2]);
       expect(exitCode, equals(1));
     });
 
     test('compares in JSON format and writes to file', () async {
-      final file1 = await createSampleTraceFile('base.json', durationMs: 100, rssMb: 200.0);
-      final file2 = await createSampleTraceFile('stressed.json', durationMs: 150, rssMb: 250.0);
+      final file1 = await createSampleTraceFile('base.json',
+          durationMs: 100, rssMb: 200.0);
+      final file2 = await createSampleTraceFile('stressed.json',
+          durationMs: 150, rssMb: 250.0);
       final outputFile = path.join(tempDir.path, 'report.json');
 
       final exitCode = await command.run([
@@ -108,7 +117,8 @@ void main() {
       expect(exitCode, equals(1)); // Regression detected -> exit 1
       expect(File(outputFile).existsSync(), isTrue);
 
-      final reportJson = jsonDecode(await File(outputFile).readAsString()) as Map<String, dynamic>;
+      final reportJson = jsonDecode(await File(outputFile).readAsString())
+          as Map<String, dynamic>;
       expect(reportJson['is_regression'], isTrue);
     });
   });
