@@ -2,10 +2,9 @@
 
 **Runtime observability framework for on-device AI models**
 
-[![pub package](https://img.shields.io/pub/v/edgepulse.svg?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/edgepulse)
-[![pub points](https://img.shields.io/pub/points/edgepulse?style=for-the-badge&logo=dart&logoColor=white)](https://pub.dev/packages/edgepulse/score)
-[![popularity](https://img.shields.io/pub/popularity/edgepulse?style=for-the-badge)](https://pub.dev/packages/edgepulse/score)
-[![likes](https://img.shields.io/pub/likes/edgepulse?style=for-the-badge)](https://pub.dev/packages/edgepulse/score)
+[![edgepulse_core](https://img.shields.io/pub/v/edgepulse_core.svg?style=for-the-badge&logo=dart&logoColor=white&label=edgepulse_core)](https://pub.dev/packages/edgepulse_core)
+[![edgepulse_cli](https://img.shields.io/pub/v/edgepulse_cli.svg?style=for-the-badge&logo=dart&logoColor=white&label=edgepulse_cli)](https://pub.dev/packages/edgepulse_cli)
+[![GitHub Release](https://img.shields.io/github/v/release/assassinaj602/edgepulse?style=for-the-badge&logo=github)](https://github.com/assassinaj602/edgepulse/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/assassinaj602/edgepulse/test.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/assassinaj602/edgepulse/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Dart](https://img.shields.io/badge/Dart-3.0%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
