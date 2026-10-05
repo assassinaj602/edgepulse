@@ -25,7 +25,10 @@ class _TracePageState extends State<TracePage> {
   bool _loading = false;
 
   Future<void> _runTrace() async {
-    setState(() { _loading = true; _output = 'Tracing…'; });
+    setState(() {
+      _loading = true;
+      _output = 'Tracing…';
+    });
 
     final pulse = EdgePulse(
       collector: PlatformMetricCollector(),
@@ -51,11 +54,17 @@ class _TracePageState extends State<TracePage> {
       await pulse.dispose();
 
       final json = pulse.exportJson(traces);
-      setState(() { _output = json; });
+      setState(() {
+        _output = json;
+      });
     } on StateError catch (e) {
-      setState(() { _output = 'Error: $e'; });
+      setState(() {
+        _output = 'Error: $e';
+      });
     } finally {
-      setState(() { _loading = false; });
+      setState(() {
+        _loading = false;
+      });
     }
   }
 

@@ -15,6 +15,10 @@ enum ThermalState {
   /// Thermal state unavailable or unsupported on this platform.
   unknown;
 
+  /// Whether the thermal state is degraded (serious or critical).
+  bool get isDegraded =>
+      this == ThermalState.serious || this == ThermalState.critical;
+
   /// Parses a string representation into a [ThermalState].
   static ThermalState fromString(String value) {
     return ThermalState.values.firstWhere(

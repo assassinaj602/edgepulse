@@ -42,7 +42,7 @@ on consumer edge devices. The research question:
 > *What are the observable runtime characteristics of quantized LLMs on consumer 
 > edge devices, and how do they degrade under resource pressure?*
 
-📄 **Paper:** Coming to arXiv — `cs.LG / cs.PF`  
+📄 **Paper:** In progress — experiment scripts in `research/experiment/`  
 📊 **Dataset:** Raw inference traces across 3 model families × 3 stress scenarios × 50 runs  
 🔁 **Reproducible:** All experiment scripts are in `research/experiment/`
 
@@ -50,13 +50,13 @@ on consumer edge devices. The research question:
 
 ## Platform Support
 
-| Platform        | Language    | Package             | Status          |
-|-----------------|-------------|---------------------|-----------------|
-| Flutter         | Dart        | `edgepulse`         | ✅ Available    |
-| CLI / CI        | Dart        | `edgepulse_cli`     | ✅ Available    |
-| Android Native  | Kotlin      | `sate-android` (TBD)| 🗺️ Planned     |
-| Web / Node.js   | TypeScript  | `@edgepulse/core`   | 🗺️ Planned     |
-| iOS Native      | Swift       | SPM (TBD)           | 🔭 Future       |
+| Platform        | Language    | Package           | Status                               |
+|-----------------|-------------|-------------------|--------------------------------------|
+| Flutter         | Dart        | `edgepulse`       | ✅ v0.2.0 (Android + iOS plugin)     |
+| CLI / CI        | Dart        | `edgepulse_cli`   | ✅ v0.1.0                            |
+| Android Native  | Kotlin      | Coming soon       | 🗺️ Planned v1.0                     |
+| Web / Node.js   | TypeScript  | Coming soon       | 🗺️ Planned v1.0                     |
+| iOS Native      | Swift       | SPM coming soon   | 🔭 Future                            |
 
 ---
 
