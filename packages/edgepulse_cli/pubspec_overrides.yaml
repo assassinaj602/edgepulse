@@ -1,3 +1,0 @@
-dependency_overrides:
-  edgepulse_core:
-    path: ../edgepulse_core
