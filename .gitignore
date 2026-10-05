@@ -23,6 +23,8 @@ Thumbs.db
 
 # Research
 research/experiment/results/*.json
+research/experiment/results/*.csv
+research/experiment/results/*.md
 research/experiment/models/*.gguf
 research/experiment/models/*.tflite
 research/experiment/models/*.onnx

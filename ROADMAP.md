@@ -14,15 +14,17 @@
 - [x] GitHub Actions CI (test + analyze + format)
 - [x] Published to pub.dev
 
-## v0.2.0 — Native Platform Layer
-- [ ] Android Kotlin plugin (memory, thermal, battery)
-- [ ] iOS Swift plugin (memory, thermal)
-- [ ] PlatformMetricCollector in Flutter package
+## v0.2.0 — Native Platform Layer ✅ Released
+- [x] Android Kotlin plugin (memory, thermal, battery, CPU)
+- [x] iOS Swift plugin (memory, thermal, battery, CPU)
+- [x] PlatformMetricCollector in Flutter package
 
-## v0.3.0 — SATE AI Integration
-- [ ] EdgePulse + SATE AI joint API
-- [ ] FaultTrace: combines FaultResult + InferenceTrace
-- [ ] Research experiment script
+## v0.3.0 — SATE AI Integration + Research ✅ In Progress
+- [x] Research experiment script (3 models × 3 scenarios × 50 runs)
+- [x] Python analysis script (Mann-Whitney U tests, figures)
+- [x] Paper draft (research/paper/paper.md)
+- [ ] Run experiment on real device with real models
+- [ ] arXiv submission
 
 ## v0.4.0 — Dashboard
 - [ ] Web-based trace visualiser (memory curves, latency histograms)
