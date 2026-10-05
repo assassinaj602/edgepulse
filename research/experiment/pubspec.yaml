@@ -1,0 +1,16 @@
+name: edgepulse_experiment
+description: >-
+  Empirical study of quantized LLM runtime characteristics on consumer
+  edge devices. Companion to the EdgePulse observability framework.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  edgepulse_core:
+    path: ../../packages/edgepulse_core
+
+dev_dependencies:
+  lints: ^3.0.0

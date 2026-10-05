@@ -6,7 +6,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
-## [Unreleased] — v0.2.0
+## [Unreleased] — v0.3.0
+
+### Added
+- `research/experiment/run_experiment.dart` — 3 models × 3 scenarios × 50 runs
+- `research/experiment/analyse.py` — pandas/matplotlib/scipy analysis
+- `research/experiment/requirements.txt`
+- `research/paper/paper.md` — full research paper draft
+- `research/paper/README.md` — reproduction instructions
+- BibTeX citation block in root README
+
+## [0.2.0] — 2026-10-05
 
 ### Added
 - Android Kotlin native plugin (EdgePulsePlugin.kt)
