@@ -16,7 +16,8 @@ enum ThermalState {
   unknown;
 
   /// Whether the thermal state is degraded (serious or critical).
-  bool get isDegraded => this == ThermalState.serious || this == ThermalState.critical;
+  bool get isDegraded =>
+      this == ThermalState.serious || this == ThermalState.critical;
 
   /// Parses a string representation into a [ThermalState].
   static ThermalState fromString(String value) {

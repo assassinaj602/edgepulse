@@ -10,7 +10,6 @@ class PlatformMetricCollector implements MetricCollector {
   static const _channel = MethodChannel('io.github.edgepulse/metrics');
   bool _isInitialized = false;
 
-  @override
   bool get isInitialized => _isInitialized;
 
   @override
@@ -29,8 +28,8 @@ class PlatformMetricCollector implements MetricCollector {
 
   @override
   Future<MemorySnapshot> captureMemory() async {
-    final result = await _channel
-        .invokeMethod<Map<dynamic, dynamic>>('captureMemory');
+    final result =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('captureMemory');
     if (result == null) {
       return MemorySnapshot(
         rssMb: 0,
@@ -53,8 +52,7 @@ class PlatformMetricCollector implements MetricCollector {
 
   @override
   Future<ThermalState> captureThermalState() async {
-    final result =
-        await _channel.invokeMethod<String>('captureThermal');
+    final result = await _channel.invokeMethod<String>('captureThermal');
     return ThermalState.fromString(result ?? 'unknown');
   }
 
@@ -78,8 +76,8 @@ class PlatformMetricCollector implements MetricCollector {
   /// On iOS, 'battery_unit' will be 'level_fraction' (0.0–1.0).
   /// On Android, battery is in milliamps.
   Future<Map<String, String>> getDeviceInfo() async {
-    final result = await _channel
-        .invokeMethod<Map<dynamic, dynamic>>('getDeviceInfo');
+    final result =
+        await _channel.invokeMethod<Map<dynamic, dynamic>>('getDeviceInfo');
     if (result == null) return {};
     return result.map((k, v) => MapEntry(k.toString(), v.toString()));
   }

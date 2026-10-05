@@ -20,7 +20,12 @@ void main() {
               'brand': 'google',
             };
           case 'captureMemory':
-            return {'rss_mb': 312.4, 'available_mb': 2048.0, 'total_mb': 8192.0, 'low_memory': false};
+            return {
+              'rss_mb': 312.4,
+              'available_mb': 2048.0,
+              'total_mb': 8192.0,
+              'low_memory': false
+            };
           case 'captureThermal':
             return 'nominal';
           case 'captureBattery':
@@ -105,18 +110,25 @@ void main() {
       (call) async => call.method == 'captureThermal' ? 'unknown' : null,
     );
     final collector = PlatformMetricCollector();
-    expect(ThermalState.fromString('unknown'), ThermalState.unknown);
-    expect(ThermalState.unknown.isDegraded, isFalse);
+    final state = await collector.captureThermalState();
+    expect(state, ThermalState.unknown);
+    expect(state.isDegraded, isFalse);
   });
 
-  test('captureBatteryDrainMah() returns null when unavailable (simulator)', () async {
+  test('captureBatteryDrainMah() returns null when unavailable (simulator)',
+      () async {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
       const MethodChannel('io.github.edgepulse/metrics'),
       (call) async {
         if (call.method == 'getDeviceInfo') {
-          return {'model': 'iPhone', 'manufacturer': 'Apple',
-                  'os_version': '17.0', 'sdk_int': 'ios', 'brand': 'Apple'};
+          return {
+            'model': 'iPhone',
+            'manufacturer': 'Apple',
+            'os_version': '17.0',
+            'sdk_int': 'ios',
+            'brand': 'Apple'
+          };
         }
         if (call.method == 'captureBattery') return null;
         if (call.method == 'captureMemory') {
@@ -134,14 +146,20 @@ void main() {
     await collector.dispose();
   });
 
-  test('captureThermalState() returns ThermalState.serious correctly', () async {
+  test('captureThermalState() returns ThermalState.serious correctly',
+      () async {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
       const MethodChannel('io.github.edgepulse/metrics'),
       (call) async {
         if (call.method == 'getDeviceInfo') {
-          return {'model': 'iPhone', 'manufacturer': 'Apple',
-                  'os_version': '17.0', 'sdk_int': 'ios', 'brand': 'Apple'};
+          return {
+            'model': 'iPhone',
+            'manufacturer': 'Apple',
+            'os_version': '17.0',
+            'sdk_int': 'ios',
+            'brand': 'Apple'
+          };
         }
         if (call.method == 'captureThermal') return 'serious';
         if (call.method == 'captureMemory') {
