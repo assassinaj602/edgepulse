@@ -2,6 +2,7 @@
 
 **Runtime observability framework for on-device AI models**
 
+[![edgepulse](https://img.shields.io/pub/v/edgepulse.svg?style=for-the-badge&logo=flutter&logoColor=white&label=edgepulse)](https://pub.dev/packages/edgepulse)
 [![edgepulse_core](https://img.shields.io/pub/v/edgepulse_core.svg?style=for-the-badge&logo=dart&logoColor=white&label=edgepulse_core)](https://pub.dev/packages/edgepulse_core)
 [![edgepulse_cli](https://img.shields.io/pub/v/edgepulse_cli.svg?style=for-the-badge&logo=dart&logoColor=white&label=edgepulse_cli)](https://pub.dev/packages/edgepulse_cli)
 [![GitHub Release](https://img.shields.io/github/v/release/assassinaj602/edgepulse?style=for-the-badge&logo=github)](https://github.com/assassinaj602/edgepulse/releases)
@@ -71,7 +72,7 @@ python3 analyse.py
 
 | Platform        | Language   | Package          | Status                                   |
 |-----------------|------------|------------------|------------------------------------------|
-| Flutter         | Dart       | `edgepulse`      | 🔜 v0.2.0 — publishing soon             |
+| Flutter         | Dart       | `edgepulse`      | ✅ v0.2.0 on pub.dev                     |
 | CLI / CI        | Dart       | `edgepulse_cli`  | ✅ v0.1.0 on pub.dev                    |
 | Pure Dart Core  | Dart       | `edgepulse_core` | ✅ v0.1.0 on pub.dev                    |
 | Android Native  | Kotlin     | Coming soon      | 🗺️ Planned v1.0                        |
@@ -84,7 +85,7 @@ python3 analyse.py
 
 ```yaml
 dependencies:
-  edgepulse: ^0.1.0
+  edgepulse: ^0.2.0
 ```
 
 For CI/CD without Flutter:
