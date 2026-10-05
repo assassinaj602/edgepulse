@@ -69,13 +69,14 @@ python3 analyse.py
 
 ## Platform Support
 
-| Platform        | Language    | Package           | Status                               |
-|-----------------|-------------|-------------------|--------------------------------------|
-| Flutter         | Dart        | `edgepulse`       | ✅ v0.2.0 (Android + iOS plugin)     |
-| CLI / CI        | Dart        | `edgepulse_cli`   | ✅ v0.1.0                            |
-| Android Native  | Kotlin      | Coming soon       | 🗺️ Planned v1.0                     |
-| Web / Node.js   | TypeScript  | Coming soon       | 🗺️ Planned v1.0                     |
-| iOS Native      | Swift       | SPM coming soon   | 🔭 Future                            |
+| Platform        | Language   | Package          | Status                                   |
+|-----------------|------------|------------------|------------------------------------------|
+| Flutter         | Dart       | `edgepulse`      | 🔜 v0.2.0 — publishing soon             |
+| CLI / CI        | Dart       | `edgepulse_cli`  | ✅ v0.1.0 on pub.dev                    |
+| Pure Dart Core  | Dart       | `edgepulse_core` | ✅ v0.1.0 on pub.dev                    |
+| Android Native  | Kotlin     | Coming soon      | 🗺️ Planned v1.0                        |
+| Web / Node.js   | TypeScript | Coming soon      | 🗺️ Planned v1.0                        |
+| iOS Native      | Swift      | SPM coming soon  | 🔭 Future                               |
 
 ---
 
