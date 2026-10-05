@@ -18,6 +18,13 @@ jobs:
         with:
           sdk: stable
 
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
       - name: Publish Dry-Run (edgepulse_core)
         run: |
           cd packages/edgepulse_core
@@ -29,3 +36,9 @@ jobs:
           cd packages/edgepulse_cli
           dart pub get
           dart pub publish --dry-run
+
+      - name: Publish Dry-Run (edgepulse)
+        run: |
+          cd packages/edgepulse
+          flutter pub get
+          flutter pub publish --dry-run
