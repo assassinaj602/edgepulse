@@ -2,58 +2,101 @@ name: CI
 
 on:
   push:
-    branches: [ main, 'feat/*', 'fix/*', 'chore/*', 'ci/*', 'release/*' ]
+    branches: [ main, 'feat/*', 'fix/*', 'chore/*', 'ci/*', 'release/*', 'research/*' ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  test:
+  test-core:
+    name: Test edgepulse_core
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
+      - name: Install dependencies
+        working-directory: packages/edgepulse_core
+        run: dart pub get
+      - name: Format check
+        working-directory: packages/edgepulse_core
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Analyze
+        working-directory: packages/edgepulse_core
+        run: dart analyze --fatal-infos --fatal-warnings
+      - name: Run tests
+        working-directory: packages/edgepulse_core
+        run: dart test
 
-      - name: Install dependencies (edgepulse_core)
-        run: |
-          cd packages/edgepulse_core
-          dart pub get
+  test-cli:
+    name: Test edgepulse_cli
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Get core dependencies
+        working-directory: packages/edgepulse_core
+        run: dart pub get
+      - name: Install dependencies
+        working-directory: packages/edgepulse_cli
+        run: dart pub get
+      - name: Format check
+        working-directory: packages/edgepulse_cli
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Analyze
+        working-directory: packages/edgepulse_cli
+        run: dart analyze --fatal-infos --fatal-warnings
+      - name: Run tests
+        working-directory: packages/edgepulse_cli
+        run: dart test
 
-      - name: Format check (edgepulse_core)
-        run: |
-          cd packages/edgepulse_core
-          dart format --output=none --set-exit-if-changed .
+  test-flutter-plugin:
+    name: Test edgepulse Flutter plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+      - name: Get core dependencies
+        working-directory: packages/edgepulse_core
+        run: dart pub get
+      - name: Get plugin dependencies
+        working-directory: packages/edgepulse
+        run: flutter pub get
+      - name: Analyze plugin
+        working-directory: packages/edgepulse
+        run: flutter analyze --fatal-infos
+      - name: Test plugin
+        working-directory: packages/edgepulse
+        run: flutter test --reporter=expanded
 
-      - name: Analyze (edgepulse_core)
+  guard:
+    name: All CI checks passed
+    runs-on: ubuntu-latest
+    needs: [test-core, test-cli, test-flutter-plugin]
+    if: always()
+    steps:
+      - name: Fail if test-core did not succeed
+        if: needs.test-core.result != 'success'
         run: |
-          cd packages/edgepulse_core
-          dart analyze --fatal-infos --fatal-warnings
-
-      - name: Run tests (edgepulse_core)
+          echo "❌ test-core did not succeed: ${{ needs.test-core.result }}"
+          exit 1
+      - name: Fail if test-cli did not succeed
+        if: needs.test-cli.result != 'success'
         run: |
-          cd packages/edgepulse_core
-          dart test
-
-      - name: Install dependencies (edgepulse_cli)
+          echo "❌ test-cli did not succeed: ${{ needs.test-cli.result }}"
+          exit 1
+      - name: Fail if test-flutter-plugin did not succeed
+        if: needs.test-flutter-plugin.result != 'success'
         run: |
-          cd packages/edgepulse_cli
-          dart pub get
-
-      - name: Format check (edgepulse_cli)
-        run: |
-          cd packages/edgepulse_cli
-          dart format --output=none --set-exit-if-changed .
-
-      - name: Analyze (edgepulse_cli)
-        run: |
-          cd packages/edgepulse_cli
-          dart analyze --fatal-infos --fatal-warnings
-
-      - name: Run tests (edgepulse_cli)
-        run: |
-          cd packages/edgepulse_cli
-          dart test
+          echo "❌ test-flutter-plugin did not succeed: ${{ needs.test-flutter-plugin.result }}"
+          exit 1
+      - name: All checks passed
+        run: echo "✅ All CI checks passed successfully!"
