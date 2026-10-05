@@ -1,9 +1,7 @@
 name: edgepulse
 description: >-
-  Flutter plugin for EdgePulse — runtime observability for on-device AI.
-  Captures real memory (RSS), thermal state, battery draw, and CPU usage
-  on Android and iOS via native platform channels. Pairs with edgepulse_core
-  and SATE AI for complete on-device AI reliability testing.
+  Flutter plugin for EdgePulse — captures real memory, thermal state,
+  battery, and CPU on Android and iOS during on-device AI inference.
 version: 0.2.0
 homepage: https://github.com/assassinaj602/edgepulse
 repository: https://github.com/assassinaj602/edgepulse
