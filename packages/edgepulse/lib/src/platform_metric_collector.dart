@@ -60,7 +60,8 @@ class PlatformMetricCollector implements MetricCollector {
 
   @override
   Future<double?> captureBatteryDrainMah() async {
-    return await _channel.invokeMethod<double>('captureBattery');
+    final value = await _channel.invokeMethod<double>('captureBattery');
+    return value;
   }
 
   @override
@@ -73,15 +74,13 @@ class PlatformMetricCollector implements MetricCollector {
     _isInitialized = false;
   }
 
-  /// Returns device model and OS version from the native layer.
-  /// Use this to populate [InferenceTrace.deviceModel] and
-  /// [InferenceTrace.osVersion].
+  /// Returns device info map from the native layer.
+  /// On iOS, 'battery_unit' will be 'level_fraction' (0.0–1.0).
+  /// On Android, battery is in milliamps.
   Future<Map<String, String>> getDeviceInfo() async {
     final result = await _channel
         .invokeMethod<Map<dynamic, dynamic>>('getDeviceInfo');
     if (result == null) return {};
-    return result.map(
-      (k, v) => MapEntry(k.toString(), v.toString()),
-    );
+    return result.map((k, v) => MapEntry(k.toString(), v.toString()));
   }
 }

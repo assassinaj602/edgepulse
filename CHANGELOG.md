@@ -8,11 +8,25 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased] — v0.2.0
 
-### Planned
-- Android Kotlin native plugin (`io.github.edgepulse/metrics` MethodChannel)
-- iOS Swift native plugin
-- `PlatformMetricCollector` in the `edgepulse` Flutter package
-- Real memory RSS, thermal state, battery draw, and CPU usage on device
+### Added
+- Android Kotlin native plugin (EdgePulsePlugin.kt)
+  - captureMemory: Debug.getPss() for accurate PSS
+  - captureThermal: PowerManager.currentThermalStatus (API 29+)
+  - captureBattery: BatteryManager.CURRENT_NOW in milliamps
+  - captureCpu: /proc/stat utilisation ratio
+- iOS Swift native plugin (EdgePulsePlugin.swift)
+  - captureMemory: mach_task_basic_info resident_size
+  - captureThermal: ProcessInfo.thermalState (iOS 11+)
+  - captureBattery: UIDevice.batteryLevel (level fraction 0.0–1.0)
+  - captureCpu: host_statistics HOST_CPU_LOAD_INFO
+- PlatformMetricCollector: Dart bridge to native MethodChannel
+- edgepulse Flutter plugin package (re-exports edgepulse_core)
+- Example Flutter app demonstrating PlatformMetricCollector on device
+- 11 Flutter unit tests with mock MethodChannel
+- docs/ios-battery-note.md documenting iOS vs Android battery difference
+
+### Fixed
+- KGP deprecation warning in Android build.gradle
 
 ## [0.1.0] — 2026-10-04
 

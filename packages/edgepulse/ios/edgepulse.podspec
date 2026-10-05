@@ -1,29 +1,23 @@
-#
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint edgepulse.podspec` to validate before publishing.
-#
 Pod::Spec.new do |s|
   s.name             = 'edgepulse'
-  s.version          = '0.0.1'
-  s.summary          = 'A new Flutter plugin project.'
+  s.version          = '0.2.0'
+  s.summary          = 'Runtime observability plugin for EdgePulse on-device AI.'
   s.description      = <<-DESC
-A new Flutter plugin project.
-                       DESC
-  s.homepage         = 'http://example.com'
-  s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+    EdgePulse Flutter plugin — captures real memory (RSS), thermal state,
+    battery level, and CPU utilisation from iOS devices via platform channels.
+    Use with edgepulse_core for complete on-device AI observability.
+  DESC
+  s.homepage         = 'https://github.com/assassinaj602/edgepulse'
+  s.license          = { :type => 'MIT', :file => '../LICENSE' }
+  s.author           = { 'EdgePulse' => 'assassinaj602@github.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'edgepulse/Sources/edgepulse/**/*'
+  s.source_files     = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '15.0'
+  s.platform         = :ios, '12.0'
+  s.swift_version    = '5.0'
 
-  # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
-  s.swift_version = '5.0'
-
-  # If your plugin requires a privacy manifest, for example if it uses any
-  # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
-  # plugin's privacy impact, and then uncomment this line. For more information,
-  # see https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
-  # s.resource_bundles = {'edgepulse_privacy' => ['edgepulse/Sources/edgepulse/PrivacyInfo.xcprivacy']}
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386'
+  }
 end
