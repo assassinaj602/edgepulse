@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2 — 2026-10-06
+
+### Fixed
+
+- Added top-level `example/example.dart` for pub.dev example detection and 160/160 Pana score compliance
+
 ## 0.2.1 — 2026-10-06
 
 ### Changed
