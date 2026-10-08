@@ -1,0 +1,34 @@
+title: EdgePulse
+description: Runtime observability for on-device AI. Track memory, thermal state, battery, and latency during inference on Android and iOS.
+url: "https://assassinaj602.github.io"
+baseurl: "/edgepulse"
+github_username: assassinaj602
+
+# Theme
+remote_theme: just-the-docs/just-the-docs@v0.8.2
+color_scheme: dark
+
+# just-the-docs settings
+search_enabled: true
+heading_anchors: true
+aux_links:
+  "GitHub":
+    - "https://github.com/assassinaj602/edgepulse"
+  "pub.dev":
+    - "https://pub.dev/packages/edgepulse"
+aux_links_new_tab: true
+
+# Footer
+footer_content: 'EdgePulse is MIT-licensed. Maintained by <a href="https://github.com/assassinaj602">Muhammad Assad Ullah</a>.'
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
