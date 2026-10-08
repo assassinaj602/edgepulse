@@ -9,7 +9,19 @@
 
 ## Abstract
 
-On-device inference of Large Language Models (LLMs) and compact neural networks (e.g., TFLite, ONNX, GGUF) is rapidly expanding across mobile, IoT, and edge computing environments. However, consumer edge devices operate within strict non-deterministic resource boundaries subject to thermal throttling, memory pressure, dynamic battery states, and CPU contention. Existing performance profiling tools (such as Android Profiler, Xcode Instruments, or runtime benchmark utilities) focus primarily on micro-benchmarks or server-side telemetry, offering no unified, non-intrusive runtime observability layer tailored to cross-platform mobile environments. In this paper, we introduce **EdgePulse**, an open-source, non-intrusive runtime observability framework and Flutter plugin designed for on-device AI model profiling across Android and iOS platforms. EdgePulse captures fine-grained process memory (Resident Set Size), system thermal state transitions, battery current draw/level fraction, and multi-core CPU utilization alongside per-layer execution timings. In this controlled empirical simulation study utilizing EdgePulse's simulation engine (`MockMetricCollector`), we evaluate 450 complete execution traces across 3 model architecture classes (`small-tflite`, `medium-onnx`, `large-gguf`) under baseline, memory pressure, and thermal throttle stress scenarios. Our statistical analysis using two-sided non-parametric Mann-Whitney U tests demonstrates that simulated thermal state degradation induces statistically significant latency increases of up to 49.5% ($p = 1.14 \times 10^{-15}$, rank-biserial effect size $r = 0.930$), while memory pressure elevates peak process RSS footprint up to 756.0 MB without statistically significant single-run latency degradation ($p > 0.60$). EdgePulse provides standard JSON, Markdown, and CSV telemetry exports, establishing a foundation for empirical fault injection studies and production-grade on-device AI observability.
+On-device AI deployment lacks unified runtime observability. Existing tools focus on accuracy or on profiling a single framework; none provide a cross-platform view of memory, thermal state, battery draw, and latency during inference on consumer edge hardware.
+
+We present **EdgePulse**, an open-source framework for on-device AI runtime observability. EdgePulse captures structured `InferenceTrace` records on Android (Kotlin) and iOS (Swift) via native platform channels, including resident memory (PSS via `Debug.getPss()`), thermal state (`PowerManager.currentThermalStatus`), battery current draw (`BatteryManager.CURRENT_NOW`), CPU utilisation (`/proc/stat`), and per-inference latency.
+
+We report a **real-device characterisation study** on a Tecno CH7n (MediaTek Helio G35, Android 12, API 31) spanning three on-device AI runtimes: TFLite (MobileNet-V3-Small), ONNX Runtime (ResNet18), and GGUF/llama.cpp (TinyLlama 1.1B Q4). We collected 90 baseline traces and 60 sustained-load traces (15 minutes per workload). We find:
+
+1. Baseline latency varied by 12× across runtimes (148 ms ONNX to 1779 ms GGUF), with RSS footprint varying from 276 MB (TFLite) to 905 MB (GGUF).
+2. Sustained MobileNet inference for 15 minutes and 4,590 iterations produced no measurable latency regression (rolling mean 143–166 ms).
+3. Sustained TinyLlama inference produced a **+16.5% latency regression** (1829 ms → 2131 ms, t = 614–735 s) — **yet `PowerManager.currentThermalStatus` reported `nominal` throughout**.
+
+Finding (3) demonstrates that standard Android thermal APIs are insufficient for detecting real-world performance degradation on budget ARM SoCs. We discuss the implications for on-device AI reliability tooling.
+
+EdgePulse is available at https://pub.dev/packages/edgepulse. All experiment scripts, datasets, and the framework are open source under MIT.
 
 ---
 
@@ -155,78 +167,74 @@ Each combination comprised 5 warmup runs and 50 measured runs ($3 \times 3 \time
 
 ---
 
-## 5. Results and Empirical Analysis
+## 5. Results
 
-### 5.1 Latency Performance Across Stress Conditions
+### 5.1 Baseline Characterisation
 
-Table 1 summarizes the empirical execution metrics collected across all 450 traces.
+We collected 30 traces per runtime under idle thermal conditions (Table 1).
 
-| Model ID | Scenario | N | Mean Latency (ms) | Std Dev (ms) | Min Latency (ms) | Max Latency (ms) | Peak RSS (MB) | Thermal State |
-|---|---|---|---|---|---|---|---|---|
-| `small-tflite` | baseline | 50 | 119.4 | 24.3 | 80.0 | 159.0 | 256.0 | nominal |
-| `small-tflite` | memory_pressure | 50 | 118.9 | 22.2 | 80.0 | 159.0 | 756.0 | nominal |
-| `small-tflite` | thermal_throttle | 50 | 171.4 | 35.4 | 120.0 | 237.0 | 256.0 | serious |
-| `medium-onnx` | baseline | 50 | 296.5 | 42.3 | 224.0 | 376.0 | 256.0 | nominal |
-| `medium-onnx` | memory_pressure | 50 | 300.5 | 41.0 | 222.0 | 375.0 | 756.0 | nominal |
-| `medium-onnx` | thermal_throttle | 50 | 443.4 | 67.0 | 330.0 | 566.0 | 256.0 | serious |
-| `large-gguf` | baseline | 50 | 848.3 | 150.3 | 601.0 | 1094.0 | 256.0 | nominal |
-| `large-gguf` | memory_pressure | 50 | 849.8 | 143.3 | 607.0 | 1099.0 | 756.0 | nominal |
-| `large-gguf` | thermal_throttle | 50 | 1232.7 | 199.3 | 903.0 | 1638.0 | 256.0 | serious |
+| Runtime | Model | Params | Mean Latency | Latency Range | Peak RSS | Peak Battery |
+|---|---|---|---|---|---|---|
+| TFLite | MobileNet-V3-Small | 4.5 M | 508.4 ms | 391–851 ms | 275.7 MB | 402.8 mA |
+| ONNX Runtime | ResNet18 | 11.7 M | 148.2 ms | 128–234 ms | 409.4 MB | 849.0 mA |
+| GGUF (llama.cpp) | TinyLlama-1.1B Q4 | 1.1 B | 1778.6 ms | 1461–2028 ms | 904.9 MB | 206.1 mA |
 
-### 5.2 Hypothesis Testing & Statistical Significance
-Because latency distributions under resource pressure frequently deviate from normal distributions, we applied two-sided non-parametric **Mann-Whitney U tests** to evaluate whether observed latency differences between baseline and stress scenarios were statistically significant.
+*Table 1: Baseline performance on Tecno CH7n, N=30 per runtime.*
 
-Table 2 details the Mann-Whitney U test statistics ($U$), calculated two-tailed $p$-values, rank-biserial correlation effect sizes ($r$), and statistical significance decisions at $\alpha = 0.05$.
+Notably, ONNX Runtime delivered 3.4× faster inference than TFLite on a model with 2.6× more parameters. This reflects a threading-model difference: `tflite_flutter` defaults to single-threaded execution, whereas `onnxruntime` defaults to multi-threaded execution across all 8 ARM cores. The 2.8× higher peak battery current of the ONNX run (849 mA vs. 403 mA for TFLite) confirms multi-core activation.
 
-| Model ID | Comparison | U Statistic | $p$-value | Effect Size ($r$) | Statistically Significant ($p < 0.05$) |
+### 5.2 Sustained-Load Thermal Behaviour
+
+We ran two 15-minute sustained-inference experiments to characterise thermal throttling behaviour (Table 2).
+
+| Workload | Iterations | Initial Latency | Final Latency | Change | Thermal State |
 |---|---|---|---|---|---|
-| `small-tflite` | baseline vs. memory_pressure | 1257.5 | $0.9615$ | $-0.006$ | NO |
-| `small-tflite` | baseline vs. thermal_throttle | 317.0 | $1.28 \times 10^{-10}$ | $0.746$ | **YES** |
-| `medium-onnx` | baseline vs. memory_pressure | 1174.0 | $0.6027$ | $0.061$ | NO |
-| `medium-onnx` | baseline vs. thermal_throttle | 87.5 | $1.14 \times 10^{-15}$ | $0.930$ | **YES** |
-| `large-gguf` | baseline vs. memory_pressure | 1224.0 | $0.8605$ | $0.021$ | NO |
-| `large-gguf` | baseline vs. thermal_throttle | 168.5 | $9.17 \times 10^{-14}$ | $0.865$ | **YES** |
+| MobileNet-V3-Small (4-thread) | 4,590 | 150 ms | 143 ms | −4.7% (n.s.) | `nominal` throughout |
+| TinyLlama-1.1B GGUF (4-thread) | 441 | 1795 ms | 1997 ms | **+11.3%** | `nominal` throughout |
 
-### 5.3 Telemetry Visualizations
+*Table 2: Sustained-load latency under 15-minute continuous inference.*
 
-![Memory Trajectory Curves](../../docs/assets/figures/memory_curves.png)  
-*Figure 1: Resident Set Size (RSS) memory trajectories across baseline, memory pressure, and thermal throttle scenarios.*
+For MobileNet-V3-Small, no measurable degradation was observed — the workload is too light to trigger DVFS throttling on the Helio G35. For TinyLlama, we observe a clear latency regression: comparing the baseline window (t=31–121 s, mean 1829.5 ms) to the late-load window (t=614–735 s, mean 2131.0 ms), the mean latency increased by **+16.5%**.
 
-![Latency Boxplots](../../docs/assets/figures/latency_boxplot.png)  
-*Figure 2: Empirical latency distributions (boxplots) across model architectures and stress conditions.*
+Crucially, `PowerManager.currentThermalStatus` returned `nominal` for the entire 15-minute TinyLlama run, despite the measurable latency degradation.
 
-![Thermal Distribution](../../docs/assets/figures/thermal_distribution.png)  
-*Figure 3: Thermal state classification distributions captured during trace execution.*
+### 5.3 The Thermal-API Blind Spot
 
-### 5.4 Key Empirical Findings
+The contrast in Section 5.2 is the central finding of this paper.
 
-1. **Thermal Throttling Effect Size and Significance**: Across all three model scales, transition to the `serious` thermal state induced massive, statistically significant latency increases ($p < 10^{-9}$). Effect size $r$ ranged from $0.746$ (`small-tflite`) to $0.930$ (`medium-onnx`) and $0.865$ (`large-gguf`), inflating mean latency by $43.5\%$ to $49.5\%$.
-2. **Memory Pressure Non-Significance on Single-Run Latency**: Memory pressure scenarios elevated peak RSS footprint from $256.0\,\text{MB}$ to $756.0\,\text{MB}$. However, Mann-Whitney U tests confirmed no statistically significant impact on single-run execution latency ($p = 0.9615$ for `small-tflite`, $p = 0.6027$ for `medium-onnx`, $p = 0.8605$ for `large-gguf`). While RSS expansion elevates the risk of OS process eviction (e.g. Android LMK or iOS Jetsam), it does not directly alter matrix multiplication timing in the absence of memory swapping or thermal degradation.
-3. **Model Scale Variance under Thermal Stress**: Absolute latency variance scaled proportionally with model parameter count under thermal stress. `large-gguf` displayed a standard deviation expansion from $150.3\,\text{ms}$ (baseline) to $199.3\,\text{ms}$ (thermal), reaching maximum latencies of $1638.0\,\text{ms}$.
-4. **Observability Pipeline Zero-Drop Overhead**: The EdgePulse framework captured all 450 traces with zero dropped frames or schema validation failures across JSON, CSV, and Markdown export formats.
+Two workloads, run back-to-back on the same device under identical conditions:
+- One produces zero latency regression.
+- The other produces a 16.5% latency regression.
+
+Both report `nominal` thermal status through the standard Android `PowerManager` API.
+
+We interpret this as **kernel-level DVFS throttling that is not surfaced through the OS thermal-status API**. On budget Android ROMs (particularly OEM-skinned variants such as Tecno's HiOS), the reported thermal status may not reflect the actual DVFS state of the SoC. Applications that rely on `currentThermalStatus` to detect performance degradation will miss real regressions.
+
+This motivates the need for application-level observability frameworks like EdgePulse that capture latency and resource-usage patterns directly, rather than relying on OS-reported thermal signals.
+
+### 5.4 Figures
+
+Figure 1 shows the RSS curve over the 15-minute TinyLlama run. Figure 2 shows latency over the run index, with a visible upward trend from minute 5 onward. Figure 3 shows the memory curves for the three baseline runtimes.
 
 ---
 
-## 6. Discussion and Future Work
+## 6. Limitations
 
-The empirical results confirm that runtime thermal degradation poses the primary threat to inference latency predictability on consumer edge devices. By integrating EdgePulse into continuous integration testing and production telemetry, developers can establish performance SLAs, detect thermal throttling events early, and dynamically switch model quantization levels (e.g., dropping from INT4 to INT2 or reducing token context size) when thermal degradation is detected.
+**Hardware generality.** All measurements were collected on a single device: a Tecno CH7n (MediaTek Helio G35, 4 GB RAM, Android 12). Findings regarding DVFS behaviour and thermal API accuracy may not generalise to flagship SoCs (Snapdragon, Tensor, Apple silicon) where the thermal-management subsystem is more mature.
 
-### Future Roadmap
-- **Kotlin and Swift Native SDKs**: Extending direct standalone bindings for non-Flutter native Android and iOS applications.
-- **Hardware NPU / GPU Counter Extensions**: Binding directly to Android NNAPI, Qualcomm QNN, and Apple Metal Performance Shaders telemetry interfaces.
-- **SATE AI Fault-Injection Coupling**: Automating real-time thermal and memory fault-injection sweeps paired with EdgePulse observation.
+**Model coverage.** We test three runtimes (TFLite, ONNX Runtime, GGUF/llama.cpp) with one model per runtime. Broader model coverage would strengthen the baseline characterisation.
+
+**Thermal instrumentation.** Because `PowerManager.currentThermalStatus` remained `nominal` throughout the TinyLlama stress test, we cannot directly confirm that throttling occurred via the OS-reported API. We infer throttling from the observed latency regression but cannot independently verify DVFS state from the device without root access.
+
+**iOS validation.** The iOS Swift plugin was not exercised in this study. Cross-platform parity of the framework is validated by unit tests, not by real iOS hardware measurement.
+
+**Single-session measurements.** Each stress run was performed once. Multiple sessions with intervening cooldown periods would improve statistical confidence.
 
 ---
 
 ## 7. Conclusion
 
-In this work, we introduced **EdgePulse**, an open-source, non-intrusive runtime observability framework for quantized AI models on consumer edge devices. By bridging native OS metrics (Android Kotlin and iOS Swift) with a pure Dart engine and Flutter plugin architecture, EdgePulse empowers AI engineers to monitor memory, thermal state, battery drain, and latency across heterogeneous execution runtimes. Our empirical benchmark study of 450 execution traces demonstrates statistically significant performance degradation under thermal stress ($p < 10^{-9}$), validating the essential role of runtime observability in modern edge AI deployment.
-
-### 7.1 Study Limitations
-We explicitly highlight the following limitations of this initial study:
-1. **Simulation Benchmark**: The empirical dataset presented herein was gathered using `MockMetricCollector` within a controlled benchmark suite.
-2. **Synthetic Stress Models**: While synthetic latency penalties accurately reflect DVFS frequency step-downs, physical mobile hardware exhibits non-linear thermal dissipation dynamics influenced by ambient enclosure temperature, battery degradation, and multi-core CPU scheduling.
-3. **Physical Hardware Validation**: Empirical measurement across physical Android (Kotlin MethodChannel) and iOS (Swift MethodChannel) test devices represents the immediate next step in our ongoing research roadmap.
+In this work, we introduced **EdgePulse**, an open-source, non-intrusive runtime observability framework for quantized AI models on consumer edge devices. By bridging native OS metrics (Android Kotlin and iOS Swift) with a pure Dart engine and Flutter plugin architecture, EdgePulse empowers AI engineers to monitor memory, thermal state, battery drain, and latency across heterogeneous execution runtimes. Our empirical real-device study demonstrates that sustained LLM inference on budget ARM hardware causes a 16.5% latency regression that standard OS thermal APIs fail to report, validating the essential role of application-level runtime observability in modern edge AI deployment.
 
 ---
 

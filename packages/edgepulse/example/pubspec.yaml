@@ -12,13 +12,19 @@ dependencies:
     sdk: flutter
   edgepulse:
     path: ../
+  tflite_flutter: ^0.11.0
+  path_provider: ^2.1.0
+  onnxruntime: ^1.4.1
+  fllama: ^0.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
   integration_test:
     sdk: flutter
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/models/mobilenet_v3_small.tflite
