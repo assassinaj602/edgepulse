@@ -27,9 +27,9 @@ Finding (3) highlights a thermal-API blind spot: standard OS-level thermal APIs 
 
 ## 1. Introduction
 
-Deploying quantized Large Language Models (LLMs) and optimized deep neural networks directly to consumer edge devices reduces cloud infrastructure overhead, protects user privacy, and enables offline capability. Frameworks such as TensorFlow Lite, ONNX Runtime, and llama.cpp make complex neural network inference viable on commodity mobile hardware.
+Deploying quantized Large Language Models (LLMs) [3] and optimized deep neural networks [7] directly to consumer edge devices reduces cloud infrastructure overhead, protects user privacy, and enables offline capability. Frameworks such as TensorFlow Lite [1], ONNX Runtime [4], and llama.cpp [6] make complex neural network inference viable on commodity mobile hardware.
 
-However, executing neural networks on consumer mobile hardware introduces operational challenges that do not exist in server environments. Mobile devices rely on passive thermal dissipation and operate under variable system resource availability. Under continuous compute loads, mobile System-on-Chips (SoCs) undergo dynamic voltage and frequency scaling (DVFS) or CPU core shutdown to maintain thermal safety boundaries. Concurrently, operating system memory management daemons evict background processes or throttle applications under high memory pressure.
+However, executing neural networks on consumer mobile hardware introduces operational challenges that do not exist in server environments. Mobile devices rely on passive thermal dissipation and operate under variable system resource availability. Under continuous compute loads, mobile System-on-Chips (SoCs) undergo dynamic voltage and frequency scaling (DVFS) [8] or CPU core shutdown to maintain thermal safety boundaries. Concurrently, operating system memory management daemons [4] evict background processes or throttle applications under high memory pressure.
 
 ### 1.1 The Observability Deficit
 
@@ -54,21 +54,21 @@ This paper makes the following contributions:
 
 Mobile neural network inference relies on specialized runtime execution engines:
 
-- **TensorFlow Lite (TFLite)**: Targeted execution engine supporting post-training quantization and platform hardware delegates (NNAPI, GPU).
-- **ONNX Runtime**: Cross-platform engine supporting heterogeneous execution providers and automatic graph optimization.
-- **llama.cpp / GGUF**: High-performance C/C++ matrix execution framework optimized for quantized LLMs (such as 4-bit and 8-bit GGUF formats) on CPU architectures.
+- **TensorFlow Lite (TFLite)** [1]: Targeted execution engine supporting post-training quantization [2] and platform hardware delegates (NNAPI, GPU).
+- **ONNX Runtime** [4]: Cross-platform engine supporting heterogeneous execution providers and automatic graph optimization.
+- **llama.cpp / GGUF** [3], [6]: High-performance C/C++ matrix execution framework optimized for quantized LLMs (such as 4-bit and 8-bit GGUF formats) on CPU architectures.
 
 ### 2.2 Thermal Dissipation and Memory Pressure
 
-Consumer smartphones depend on passive thermal conduction through the device enclosure. Sustained matrix multiplication workloads raise SoC junction temperatures. When temperatures exceed hardware safety limits, kernel-level thermal governors lower clock frequencies or gate active core frequencies.
+Consumer smartphones depend on passive thermal conduction through the device enclosure. Sustained matrix multiplication workloads raise SoC junction temperatures. When temperatures exceed hardware safety limits, kernel-level thermal governors lower clock frequencies via DVFS mechanisms [8] or gate active core frequencies.
 
-Additionally, memory pressure from quantized LLM execution presents operational risks. Large working sets during prompt processing and Key-Value (KV) cache generation elevate process Proportional Set Size (PSS), increasing susceptibility to termination by system low-memory killers (LMK).
+Additionally, memory pressure from quantized LLM execution presents operational risks. Large working sets during prompt processing and Key-Value (KV) cache generation elevate process Proportional Set Size (PSS), increasing susceptibility to termination by system low-memory killers (LMK) [4].
 
 ### 2.3 Existing Telemetry Approaches
 
 Existing mobile profiling tools present distinct operational tradeoffs:
 
-- **Framework Micro-benchmarks**: Tools such as the TFLite Benchmark CLI measure isolated iteration timing but do not capture OS thermal state transitions, battery current draw, or memory PSS deltas during application execution.
+- **Framework Micro-benchmarks**: Tools such as the TFLite Benchmark CLI [6] measure isolated iteration timing but do not capture OS thermal state transitions, battery current draw, or memory PSS deltas during application execution.
 - **IDE Profilers**: Android Studio Profiler and Xcode Instruments offer comprehensive hardware metrics but require attached USB debugging sessions and GUI interaction, preventing continuous automated integration testing.
 
 EdgePulse addresses these limitations by embedding lightweight, structured telemetry collection directly into the application runtime.
@@ -217,7 +217,7 @@ Direct, application-level timing and memory profiling—as implemented in EdgePu
 ## 6. Limitations
 
 1. **Device Diversity**: Hardware measurements were conducted on a single budget device (Tecno CH7n / MediaTek Helio G35). Behavior on flagship processors with active thermal management requires further study.
-2. **Thermal Register Access**: Kernel-level DVFS clock frequencies could not be directly sampled without root access. Throttling is inferred from latency degradation under sustained compute.
+2. **Thermal Register Access**: Kernel-level DVFS clock frequencies cannot be directly sampled without root access on production consumer devices. Throttling is therefore inferred from observed latency degradation under sustained compute load. This is not a limitation unique to EdgePulse — it is the universal deployment constraint facing any non-rooted mobile observability tool. EdgePulse's application-layer latency tracking detects the performance consequence of throttling even when the OS-level thermal API does not report it.
 3. **iOS Platform Validation**: The iOS Swift plugin implementation was validated via unit test stubs rather than physical iOS hardware benchmarks.
 
 ---
