@@ -35,8 +35,8 @@ If you use EdgePulse in academic work, cite:
   author = {Ullah, Muhammad Assad},
   title  = {EdgePulse: A Runtime Observability Framework for Quantized Large Language Models on Consumer Edge Devices},
   year   = {2026},
-  doi    = {10.5281/zenodo.1234567},
-  url    = {https://github.com/assassinaj602/edgepulse}
+  doi    = {10.5281/zenodo.23248718},
+  url    = {https://doi.org/10.5281/zenodo.23248718}
 }
 ```
 
