@@ -7,9 +7,24 @@ permalink: /research/
 
 # Research
 
-## Paper
+## Joint Study (Latest)
 
-**EdgePulse: A Runtime Observability Framework for Quantized Large Language Models on Consumer Edge Devices**
+**Characterising On-Device AI Failure Modes Under Joint Fault Injection and Runtime Observability**
+
+*Muhammad Assad Ullah* — Department of Computer Science, University of Engineering and Technology Taxila, Pakistan
+
+📄 **[Read the paper (PDF)](/assets/joint-paper.pdf)**  
+📦 **[Zenodo Publication](https://doi.org/10.5281/zenodo.23262270)**  
+🐙 **[Code + 280-trace dataset on GitHub](https://github.com/assassinaj602/edgepulse/tree/main/research/experiment/results)**
+
+280 real-device traces on a Tecno CH7n handset. Key findings:
+1. **Thermal API Blind Spot**: +486.8% latency increase for MobileNetV3 TFLite and +406.6% for ResNet-18 ONNX while `PowerManager.currentThermalStatus` reports `nominal` in 100% of 70 stress runs.
+2. **Bimodal LLM Malformed-Input Failure**: TinyLlama 1.1B GGUF shows an extreme bimodal distribution under malformed input (8 runs ~1.7s, 2 runs ~20s generation loop).
+3. **Inverted Fault Tolerances**: Vision models are thermal-sensitive but input-resilient; LLMs are input-sensitive but less thermal-sensitive.
+
+---
+
+## EdgePulse — Runtime Observability
 
 *Muhammad Assad Ullah* — Independent Researcher
 
