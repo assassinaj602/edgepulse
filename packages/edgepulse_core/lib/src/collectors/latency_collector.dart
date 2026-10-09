@@ -5,7 +5,7 @@
 class LatencyCollector {
   final Stopwatch _stopwatch = Stopwatch();
 
-  /// Starts the timer. Safe to call multiple times — restarts if already running.
+  /// Starts the timer. Safe to call multiple times: restarts if already running.
   void start() {
     _stopwatch
       ..reset()

@@ -1,16 +1,16 @@
 # Changelog
 
-## 0.2.2 — 2026-10-06
+## 0.2.2: 2026-10-06
 
 ### Fixed
 
 - Added top-level `example/example.dart` for pub.dev example detection and 160/160 Pana score compliance
 
-## 0.2.1 — 2026-10-06
+## 0.2.1: 2026-10-06
 
 ### Changed
 
-- Trimmed pubspec description to 139 characters (was 260) — meets Pana's 60-180 guidance
+- Trimmed pubspec description to 139 characters (was 260): meets Pana's 60-180 guidance
 - Added `example/example.dart` for pub.dev example detection
 
 ### Notes
@@ -18,11 +18,11 @@
 - Version bumped to trigger pub.dev score recomputation
 - Expected score after recomputation: 160/160
 
-## 0.2.0 — 2026-10-06
+## 0.2.0: 2026-10-06
 
 ### Added
 
-- `PlatformMetricCollector` — reads real device metrics via Flutter MethodChannel
+- `PlatformMetricCollector`: reads real device metrics via Flutter MethodChannel
 - Android Kotlin native plugin (`EdgePulsePlugin.kt`):
   - `captureMemory`: Debug.getPss() for accurate process memory in MB
   - `captureThermal`: PowerManager.currentThermalStatus (API 29+)

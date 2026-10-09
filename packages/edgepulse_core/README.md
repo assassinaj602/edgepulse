@@ -1,8 +1,8 @@
 # edgepulse_core
 
-Pure Dart core library for EdgePulse — providing data models, metric collectors, exporters, and the `PulseRunner` orchestration engine for on-device AI inference tracing.
+Pure Dart core library for EdgePulse: providing data models, metric collectors, exporters, and the `PulseRunner` orchestration engine for on-device AI inference tracing.
 
-Zero Flutter dependency — runs anywhere Dart runs.
+Zero Flutter dependency: runs anywhere Dart runs.
 
 ## Features
 

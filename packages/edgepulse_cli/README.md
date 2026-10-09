@@ -1,6 +1,6 @@
 # edgepulse_cli
 
-Standalone CLI for EdgePulse — trace on-device AI models and compare inference results from any terminal or CI/CD pipeline. No Flutter required.
+Standalone CLI for EdgePulse: trace on-device AI models and compare inference results from any terminal or CI/CD pipeline. No Flutter required.
 
 ## Installation
 

@@ -1,5 +1,5 @@
 name: edgepulse_core
-description: Pure Dart core for EdgePulse — data models, metric collectors, exporters, and PulseRunner.
+description: Pure Dart core for EdgePulse: data models, metric collectors, exporters, and PulseRunner.
 version: 0.1.0
 repository: https://github.com/assassinaj602/edgepulse
 homepage: https://github.com/assassinaj602/edgepulse#readme

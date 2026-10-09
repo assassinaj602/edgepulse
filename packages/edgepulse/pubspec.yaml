@@ -1,6 +1,6 @@
 name: edgepulse
 description: >-
-  Flutter plugin for EdgePulse — captures real memory, thermal state,
+  Flutter plugin for EdgePulse: captures real memory, thermal state,
   battery, and CPU on Android and iOS during on-device AI inference.
 version: 0.2.2
 homepage: https://github.com/assassinaj602/edgepulse

@@ -22,12 +22,12 @@
 ## Overview
 
 When an on-device AI model runs on a phone, you currently get one of two outcomes: 
-it worked, or it crashed. You have no visibility into *what happened during inference* — 
+it worked, or it crashed. You have no visibility into *what happened during inference*: 
 how much memory was consumed, whether the CPU was thermally throttled, how battery 
 draw correlated with model size, or which layers were the bottleneck.
 
 EdgePulse fills that gap. It attaches to any on-device AI model and captures a 
-structured `InferenceTrace` for every run — covering memory (RSS, heap, native), 
+structured `InferenceTrace` for every run: covering memory (RSS, heap, native), 
 thermal state, battery microamp draw, CPU utilisation, per-layer timing, and output 
 confidence. Traces are exported as JSON, Markdown, or CSV for analysis, CI/CD 
 integration, or academic research.
@@ -139,7 +139,7 @@ edgepulse/
 ```
 
 The `MetricCollector` interface is the central plugin point. Implement it to add 
-new metric sources — hardware counters, cloud telemetry, custom sensors.
+new metric sources: hardware counters, cloud telemetry, custom sensors.
 
 ---
 
@@ -213,7 +213,7 @@ Good first issues are labeled
 ## 🌟 Contributors
 
 EdgePulse is built by people who believe on-device AI deserves visibility.
-Every contribution — code, docs, bug reports, or experiment traces — matters.
+Every contribution: code, docs, bug reports, or experiment traces: matters.
 
 <a href="https://github.com/assassinaj602/edgepulse/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=assassinaj602/edgepulse" />
@@ -234,5 +234,5 @@ MIT License. See [LICENSE](LICENSE).
 
 ## Related Projects
 
-- [SATE AI](https://github.com/assassinaj602/sate_ai) — Fault injection framework 
+- [SATE AI](https://github.com/assassinaj602/sate_ai): Fault injection framework 
   for on-device AI models in Flutter. EdgePulse is the observability companion to SATE AI.

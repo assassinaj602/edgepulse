@@ -1,6 +1,6 @@
 # edgepulse
 
-**Flutter plugin for EdgePulse — runtime observability for on-device AI.**
+**Flutter plugin for EdgePulse: runtime observability for on-device AI.**
 
 [![pub package](https://img.shields.io/pub/v/edgepulse.svg)](https://pub.dev/packages/edgepulse)
 

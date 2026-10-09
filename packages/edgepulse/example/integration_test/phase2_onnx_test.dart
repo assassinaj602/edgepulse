@@ -11,7 +11,7 @@ void main() {
 
   final results = <Map<String, dynamic>>[];
 
-  testWidgets('Real ONNX inference on device — ResNet-18', (WidgetTester tester) async {
+  testWidgets('Real ONNX inference on device: ResNet-18', (WidgetTester tester) async {
     var modelFile = File('/sdcard/Android/data/io.github.edgepulse.edgepulse_example/files/resnet18v1.onnx');
     if (!await modelFile.exists()) {
       modelFile = File('/sdcard/Download/resnet18v1.onnx');

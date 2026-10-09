@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 /// Point-in-time snapshot of process memory usage.
 @immutable
 class MemorySnapshot {
-  /// Resident Set Size (RSS) in megabytes — actual RAM occupied in physical memory.
+  /// Resident Set Size (RSS) in megabytes: actual RAM occupied in physical memory.
   final double rssMb;
 
   /// Dart managed heap memory in megabytes.

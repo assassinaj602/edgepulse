@@ -10,7 +10,7 @@ void main() {
 
   final samples = <Map<String, dynamic>>[];
 
-  testWidgets('Thermal stress — sustained TinyLlama inference for 15 minutes',
+  testWidgets('Thermal stress: sustained TinyLlama inference for 15 minutes',
       (tester) async {
     var modelFile = File('/data/local/tmp/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf');
     if (!await modelFile.exists()) {

@@ -84,7 +84,7 @@ class TraceCommand {
     if (modelFormat.isEmpty) modelFormat = 'unknown';
 
     stderr.writeln(
-      '⚠️  Running in mock mode — real device metrics require the Flutter plugin.',
+      '⚠️  Running in mock mode: real device metrics require the Flutter plugin.',
     );
 
     final random = Random();

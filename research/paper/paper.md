@@ -17,7 +17,7 @@ We built EdgePulse, an open-source observability framework for on-device AI. It 
 
 We ran a real-device study on a Tecno CH7n (MediaTek Helio G35, 4 GB RAM, Android 12) across three runtimes: TFLite (MobileNet-V3-Small), ONNX Runtime (ResNet18), and GGUF/llama.cpp (TinyLlama 1.1B Q4). We collected 90 baseline traces and 60 sustained-load traces over 15-minute workloads. Three findings emerged:
 
-1. Baseline mean latency ranged from 148 ms (ONNX) to 1,779 ms (GGUF) — a 12× spread — with peak RSS spanning 276 MB to 905 MB.
+1. Baseline mean latency ranged from 148 ms (ONNX) to 1,779 ms (GGUF): a 12× spread: with peak RSS spanning 276 MB to 905 MB.
 2. Continuous MobileNet inference over 15 minutes (4,590 iterations) showed no latency degradation (rolling mean 143–166 ms).
 3. Continuous TinyLlama decoding over 15 minutes produced a +16.5% latency increase (1,829 ms → 2,131 ms) while `PowerManager.currentThermalStatus` reported `nominal` for the entire run.
 
@@ -33,7 +33,7 @@ But mobile hardware is not a server. Smartphones dissipate heat through their ch
 
 ### 1.1 The Observability Deficit
 
-Model evaluation usually runs isolated micro-benchmarks or static accuracy tests. Those numbers don't reflect what happens under a 15-minute production workload on a budget device. IDE profilers like Android Studio and Xcode Instruments can show hardware counters, but they need a USB-attached debug session and a GUI — they can't run in automated testing or CI pipelines. Neither provides a unified, cross-platform API that ties hardware state to individual inference calls.
+Model evaluation usually runs isolated micro-benchmarks or static accuracy tests. Those numbers don't reflect what happens under a 15-minute production workload on a budget device. IDE profilers like Android Studio and Xcode Instruments can show hardware counters, but they need a USB-attached debug session and a GUI: they can't run in automated testing or CI pipelines. Neither provides a unified, cross-platform API that ties hardware state to individual inference calls.
 
 This leaves developers unable to correlate a latency regression with its cause: thermal throttling, memory pressure, or something else.
 
@@ -52,17 +52,17 @@ This paper presents:
 
 ### 2.1 On-Device AI Runtimes
 
-Three execution engines cover most on-device AI deployments. TFLite [1] is Google's mobile-targeted runtime; it supports post-training quantization [2] and hardware delegates (NNAPI, GPU delegate). ONNX Runtime [4] runs cross-platform with heterogeneous execution providers and automatic graph optimization. llama.cpp / GGUF [3], [6] is a C/C++ matrix execution engine built for quantized LLMs — 4-bit and 8-bit GGUF formats specifically — on CPU-only consumer hardware.
+Three execution engines cover most on-device AI deployments. TFLite [1] is Google's mobile-targeted runtime; it supports post-training quantization [2] and hardware delegates (NNAPI, GPU delegate). ONNX Runtime [4] runs cross-platform with heterogeneous execution providers and automatic graph optimization. llama.cpp / GGUF [3], [6] is a C/C++ matrix execution engine built for quantized LLMs: 4-bit and 8-bit GGUF formats specifically: on CPU-only consumer hardware.
 
 ### 2.2 Thermal Dissipation and Memory Pressure
 
-Consumer phones cool through the chassis. Under sustained neural network workloads, SoC temperatures climb until thermal governors reduce frequencies (DVFS [8]) or gate active cores. This is not a rare edge case — it's the normal behavior of budget ARM hardware under a 15-minute inference load.
+Consumer phones cool through the chassis. Under sustained neural network workloads, SoC temperatures climb until thermal governors reduce frequencies (DVFS [8]) or gate active cores. This is not a rare edge case: it's the normal behavior of budget ARM hardware under a 15-minute inference load.
 
 Memory pressure works differently. Quantization techniques [5] reduce static weights, but KV-cache allocation during LLM decoding raises process PSS steadily. When PSS crosses the threshold the Android LMK [4] or iOS Jetsam daemon considers dangerous, the process becomes a termination candidate. A model that runs correctly in isolation may not survive a production session.
 
 ### 2.3 Existing Telemetry Approaches
 
-The TFLite Benchmark CLI [6] measures iteration timing accurately but reports nothing about concurrent OS thermal state, battery current, or memory PSS. Android Studio Profiler and Xcode Instruments show everything but require a USB-attached debug session — you can't run them in automated tests or CI. Neither tool ties hardware state to individual inference calls in a structured, exportable format.
+The TFLite Benchmark CLI [6] measures iteration timing accurately but reports nothing about concurrent OS thermal state, battery current, or memory PSS. Android Studio Profiler and Xcode Instruments show everything but require a USB-attached debug session: you can't run them in automated tests or CI. Neither tool ties hardware state to individual inference calls in a structured, exportable format.
 
 EdgePulse fills that gap: structured per-inference telemetry, collected from the application layer, no debug session required.
 
@@ -201,16 +201,16 @@ For TinyLlama 1.1B, continuous GEMM matrix multiplications generated sustained t
 
 Throughout the 15-minute TinyLlama experiment, `PowerManager.currentThermalStatus` returned `nominal` without interruption.
 
-This is the paper's central finding. On the Tecno CH7n running HiOS, the high-level PowerManager thermal status API did not surface the DVFS clock frequency reductions that were clearly occurring — evident only from the +16.5% monotonic latency increase. Software that relies on OS thermal callbacks to detect throttling would see a healthy device while inference latency was quietly degrading by 301 ms per call.
+This is the paper's central finding. On the Tecno CH7n running HiOS, the high-level PowerManager thermal status API did not surface the DVFS clock frequency reductions that were clearly occurring: evident only from the +16.5% monotonic latency increase. Software that relies on OS thermal callbacks to detect throttling would see a healthy device while inference latency was quietly degrading by 301 ms per call.
 
-This gap isn't specific to Tecno hardware. Budget OEM Android distributions frequently implement `PowerManager.currentThermalStatus` conservatively: the API was designed for system-level power management decisions, not application-level performance monitoring. Direct application-layer timing — which is what EdgePulse does — is the only reliable way to detect the performance consequence of throttling on these devices.
+This gap isn't specific to Tecno hardware. Budget OEM Android distributions frequently implement `PowerManager.currentThermalStatus` conservatively: the API was designed for system-level power management decisions, not application-level performance monitoring. Direct application-layer timing: which is what EdgePulse does: is the only reliable way to detect the performance consequence of throttling on these devices.
 
 ---
 
 ## 6. Limitations
 
 1. **Device Diversity**: Hardware measurements were conducted on a single budget device (Tecno CH7n / MediaTek Helio G35). Behavior on flagship processors with active thermal management requires further study.
-2. **Thermal Register Access**: Kernel-level DVFS clock frequencies cannot be directly sampled without root access on production consumer devices. Throttling is therefore inferred from observed latency degradation under sustained compute load. This is not a limitation unique to EdgePulse — it is the universal deployment constraint facing any non-rooted mobile observability tool. EdgePulse's application-layer latency tracking detects the performance consequence of throttling even when the OS-level thermal API does not report it.
+2. **Thermal Register Access**: Kernel-level DVFS clock frequencies cannot be directly sampled without root access on production consumer devices. Throttling is therefore inferred from observed latency degradation under sustained compute load. This is not a limitation unique to EdgePulse: it is the universal deployment constraint facing any non-rooted mobile observability tool. EdgePulse's application-layer latency tracking detects the performance consequence of throttling even when the OS-level thermal API does not report it.
 3. **iOS Platform Validation**: The iOS Swift plugin implementation was validated via unit test stubs rather than physical iOS hardware benchmarks.
 
 ---

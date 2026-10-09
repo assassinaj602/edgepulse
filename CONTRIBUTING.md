@@ -36,7 +36,7 @@ melos run analyze
 2. Comment on the issue to claim it
 3. Fork the repo and create a branch: `feat/your-feature-name`
 4. Make your changes with tests
-5. Run `melos run test` and `melos run analyze` — both must pass
+5. Run `melos run test` and `melos run analyze`: both must pass
 6. Open a PR against `main` using the PR template
 7. A maintainer will review within 5 business days
 
@@ -103,4 +103,4 @@ chore(ci): add coverage reporting
 ## Questions?
 
 Open a [Discussion](https://github.com/assassinaj602/edgepulse/discussions) 
-— not an issue — for questions.
+: not an issue: for questions.

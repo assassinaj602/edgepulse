@@ -9,7 +9,7 @@ void main() {
 
   final samples = <Map<String, dynamic>>[];
 
-  testWidgets('Thermal stress — sustained TFLite inference for 15 minutes',
+  testWidgets('Thermal stress: sustained TFLite inference for 15 minutes',
       (tester) async {
     // Load MobileNetV3-Small (fast enough to loop, heavy enough to heat)
     final interpreter = await tfl.Interpreter.fromAsset(

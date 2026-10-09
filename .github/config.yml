@@ -5,10 +5,10 @@ blank_issues_enabled: false
 contact_links:
   - name: 💬 Ask a Question
     url: https://github.com/assassinaj602/edgepulse/discussions/categories/q-a
-    about: For usage questions and "how do I" — use Discussions, not Issues.
+    about: For usage questions and "how do I": use Discussions, not Issues.
   - name: 💡 Suggest a Feature
     url: https://github.com/assassinaj602/edgepulse/discussions/categories/ideas
-    about: For ideas and proposals — discuss first, then open an issue if we agree.
+    about: For ideas and proposals: discuss first, then open an issue if we agree.
   - name: 🔬 Discuss the Research
     url: https://github.com/assassinaj602/edgepulse/discussions/categories/research
     about: Paper, experiment design, dataset questions.

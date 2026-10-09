@@ -1,4 +1,4 @@
-/// EdgePulse Flutter plugin — runtime observability for on-device AI.
+/// EdgePulse Flutter plugin: runtime observability for on-device AI.
 ///
 /// This library re-exports everything from [edgepulse_core] and adds
 /// [PlatformMetricCollector] for reading real device metrics.

@@ -188,7 +188,7 @@ Future<void> _runExperiment(bool isFast) async {
 
   // Generate summary.md
   final summaryBuffer = StringBuffer();
-  summaryBuffer.writeln('# EdgePulse Empirical Study — Results Summary');
+  summaryBuffer.writeln('# EdgePulse Empirical Study: Results Summary');
   summaryBuffer.writeln();
   summaryBuffer.writeln('**Generated:** ${DateTime.now().toUtc().toIso8601String()}');
   summaryBuffer.writeln('**Total Traces:** ${allTraces.length} (${models.length} models × ${scenarios.length} scenarios × $runsPerScenario runs)');

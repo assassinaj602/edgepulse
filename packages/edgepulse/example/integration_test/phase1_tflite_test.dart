@@ -9,7 +9,7 @@ void main() {
 
   final results = <Map<String, dynamic>>[];
 
-  testWidgets('Real TFLite inference on device — MobileNetV3-Small',
+  testWidgets('Real TFLite inference on device: MobileNetV3-Small',
       (tester) async {
     // 1. Load the real TFLite model
     print('[EdgePulse] Loading MobileNetV3-Small...');

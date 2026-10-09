@@ -10,7 +10,7 @@ void main() {
 
   final results = <Map<String, dynamic>>[];
 
-  testWidgets('Real GGUF inference on device — TinyLlama 1.1B Q4_K_M', (WidgetTester tester) async {
+  testWidgets('Real GGUF inference on device: TinyLlama 1.1B Q4_K_M', (WidgetTester tester) async {
     var modelFile = File('/sdcard/Android/data/io.github.edgepulse.edgepulse_example/files/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf');
     if (!await modelFile.exists()) {
       modelFile = File('/sdcard/Download/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf');

@@ -1,4 +1,4 @@
-/// Pure Dart core library for EdgePulse — models, collectors, exporters, runner, and facade.
+/// Pure Dart core library for EdgePulse: models, collectors, exporters, runner, and facade.
 library edgepulse_core;
 
 export 'src/collectors/latency_collector.dart';
