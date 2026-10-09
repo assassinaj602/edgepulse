@@ -4,9 +4,10 @@ title: |
   Fault Injection and Runtime Observability
 author:
   - Muhammad Assad Ullah
-  - \small Independent Researcher
-  - \small \href{mailto:asadullahaj602@gmail.com}{asadullahaj602@gmail.com}
-date: October 9, 2026
+  - \small Department of Computer Science, University of Engineering and Technology Taxila, Pakistan
+  - \small ORCID: 0009-0007-2290-304X \mid \href{mailto:asadullahaj602@gmail.com}{asadullahaj602@gmail.com}
+  - \small SATE AI DOI: \href{https://doi.org/10.5281/zenodo.23250418}{10.5281/zenodo.23250418} \mid EdgePulse DOI: \href{https://doi.org/10.5281/zenodo.23248718}{10.5281/zenodo.23248718}
+date: October 2026
 abstract: |
   Deploying artificial intelligence models directly on edge devices exposes machine learning runtimes to hardware volatile environments, including thermal limits, volatile system memory pressure, and corrupted input data. While previous work evaluates software-level fault injection and runtime observability in isolation, no empirical study has applied fault injection and high-frequency device tracing in a combined pipeline across heterogeneous model architectures.
 
@@ -308,3 +309,4 @@ Both SATE AI and EdgePulse are available as open-source packages on pub.dev. Fut
 [14]{#ref14} Gu, J., et al. (2023). Efficient memory management for mobile deep learning inference. *ACM TECS*, 22(3), 1--25. [\url{https://doi.org/10.1145/3583688}](https://doi.org/10.1145/3583688)
 
 [15]{#ref15} Xu, D., et al. (2024). Characterizing reliability and resource contention in edge AI deployments. *IEEE Transactions on Mobile Computing*, 23(1), 115--130. [\url{https://doi.org/10.1109/TMC.2023.3289100}](https://doi.org/10.1109/TMC.2023.3289100)
+
