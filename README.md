@@ -8,7 +8,9 @@
 [![GitHub Release](https://img.shields.io/github/v/release/assassinaj602/edgepulse?style=for-the-badge&logo=github)](https://github.com/assassinaj602/edgepulse/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/assassinaj602/edgepulse/test.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&label=CI)](https://github.com/assassinaj602/edgepulse/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23248718.svg)](https://doi.org/10.5281/zenodo.23248718)
+[![DOI - EdgePulse](https://zenodo.org/badge/DOI/10.5281/zenodo.23248718.svg)](https://doi.org/10.5281/zenodo.23248718)
+[![DOI - SATE AI](https://zenodo.org/badge/DOI/10.5281/zenodo.23250418.svg)](https://doi.org/10.5281/zenodo.23250418)
+[![DOI - Joint Study](https://zenodo.org/badge/DOI/10.5281/zenodo.23262270.svg)](https://doi.org/10.5281/zenodo.23262270)
 [![Dart](https://img.shields.io/badge/Dart-3.0%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 [![Flutter](https://img.shields.io/badge/Flutter-3.10%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![GitHub Discussions](https://img.shields.io/github/discussions/assassinaj602/edgepulse?style=for-the-badge&logo=github&color=0E8A16)](https://github.com/assassinaj602/edgepulse/discussions)
@@ -40,15 +42,34 @@ complete reliability testing pipeline for on-device AI.
 
 ## Research
 
-EdgePulse is the tooling behind a real-device empirical study published on Zenodo.
+Three published papers on on-device AI reliability.
 
-📄 **Paper:** *EdgePulse: A Runtime Observability Framework for Quantized Large Language Models on Consumer Edge Devices*
+### 1. EdgePulse — Runtime Observability
 
-**DOI:** [10.5281/zenodo.23248718](https://doi.org/10.5281/zenodo.23248718)
+📄 *EdgePulse: A Runtime Observability Framework for Quantized Large Language Models on Consumer Edge Devices*
 
-**Key finding:** Sustained TinyLlama 1.1B inference for 15 minutes on a Tecno CH7n (MediaTek Helio G35, Android 12) produced a +16.5% latency regression while `PowerManager.currentThermalStatus` reported `nominal` throughout. Standard Android thermal APIs miss real hardware throttling on budget ARM SoCs.
+DOI: [10.5281/zenodo.23248718](https://doi.org/10.5281/zenodo.23248718)
 
-**Dataset:** [real_device_telemetry_90_traces.csv](research/experiment/real_device_telemetry_90_traces.csv)
+Real-device characterisation study across TFLite, ONNX Runtime, and GGUF/llama.cpp. Key finding: Android's `PowerManager.currentThermalStatus` API misses a +16.5% latency regression under sustained LLM inference.
+
+### 2. SATE AI — Fault Injection
+
+📄 *SATE AI: A Fault Injection and Reliability Engineering Framework for On-Device AI Models in Mobile Applications*
+
+DOI: [10.5281/zenodo.23250418](https://doi.org/10.5281/zenodo.23250418)
+
+Software paper describing the fault injection framework, 11 injectors, 8 runtime adapters, validated with 246 automated tests.
+
+### 3. Joint Study — Fault Injection Meets Observability
+
+📄 *Characterising On-Device AI Failure Modes Under Joint Fault Injection and Runtime Observability*
+
+DOI: [10.5281/zenodo.23262270](https://doi.org/10.5281/zenodo.23262270)
+
+280 real-device traces on a Tecno CH7n. Three findings:
+- Thermal API blind spot replicated across two model families (+487% MobileNet, +407% ResNet18) while `currentThermalStatus` reports `nominal` in 100% of 70 stress runs.
+- Bimodal failure mode in LLM malformed-input handling (8 runs at ~1.7s, 2 runs at ~20s).
+- Vision models and LLMs show opposite fault sensitivity signatures.
 
 ### Citation
 
@@ -61,6 +82,26 @@ EdgePulse is the tooling behind a real-device empirical study published on Zenod
   version   = {1.0.0},
   doi       = {10.5281/zenodo.23248718},
   url       = {https://doi.org/10.5281/zenodo.23248718}
+}
+
+@software{ullah2026sateai,
+  author    = {Muhammad Assad Ullah},
+  title     = {SATE AI: A Fault Injection and Reliability Engineering Framework for On-Device AI Models in Mobile Applications},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {0.1.0},
+  doi       = {10.5281/zenodo.23250418},
+  url       = {https://doi.org/10.5281/zenodo.23250418}
+}
+
+@software{ullah2026joint,
+  author    = {Muhammad Assad Ullah},
+  title     = {Characterising On-Device AI Failure Modes Under Joint Fault Injection and Runtime Observability},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {1.0.0},
+  doi       = {10.5281/zenodo.23262270},
+  url       = {https://doi.org/10.5281/zenodo.23262270}
 }
 ```
 
