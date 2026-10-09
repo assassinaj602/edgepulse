@@ -32,3 +32,6 @@ research/experiment/models/*.onnx
 # Melos
 .melos_tool/
 pubspec_overrides.yaml
+research/experiment/models/*.gguf
+research/experiment/models/*.onnx
+research/experiment/models/*.tflite

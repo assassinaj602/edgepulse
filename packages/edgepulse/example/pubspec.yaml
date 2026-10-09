@@ -12,10 +12,12 @@ dependencies:
     sdk: flutter
   edgepulse:
     path: ../
-  tflite_flutter: ^0.11.0
+  tflite_flutter: ^0.12.0
   path_provider: ^2.1.0
   onnxruntime: ^1.4.1
   fllama: ^0.0.1
+  sate_ai:
+    path: /media/win_drive2/New folder (4)/github_pr/research_work
 
 dev_dependencies:
   flutter_test:
